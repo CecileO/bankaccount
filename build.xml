@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <project name="BankAccount" default="build">
+ <property name="phptools.exec.path" value="C:/wamp/bin/php/php5.4.3/"/>
  <target name="build"
    depends="prepare,lint,phploc,pdepend,phpmd-ci,phpcs-ci,phpcpd,phpdox,phpunit,phpcb"/>
 
@@ -41,19 +42,19 @@
  </target>
 
  <target name="phpab" description="Generate autoloader scripts">
-  <exec executable="phpab">
+  <exec executable="${phptools.exec.path}/phpab.bat">
    <arg value="--output" />
    <arg path="${basedir}/src/application/autoload.php" />
    <arg path="${basedir}/src/application" />
   </exec>
 
-  <exec executable="phpab">
+  <exec executable="${phptools.exec.path}/phpab.bat">
    <arg value="--output" />
    <arg path="${basedir}/src/framework/autoload.php" />
    <arg path="${basedir}/src/framework" />
   </exec>
 
-  <exec executable="phpab">
+  <exec executable="${phptools.exec.path}/phpab.bat">
    <arg value="--output" />
    <arg path="${basedir}/tests/autoload.php" />
    <arg path="${basedir}/tests" />
@@ -61,7 +62,7 @@
  </target>
 
  <target name="phar" description="Generate PHP Archive (PHAR)">
-  <exec executable="phpab">
+  <exec executable="${phptools.exec.path}/phpab.bat">
    <arg value="--phar" />
    <arg value="--output" />
    <arg path="${basedir}/build/bankaccount.phar" />
@@ -86,7 +87,7 @@
  </target>
 
  <target name="phploc" description="Measure project size using PHPLOC">
-  <exec executable="phploc">
+  <exec executable="${phptools.exec.path}/phploc.bat">
    <arg value="--log-csv" />
    <arg value="${basedir}/build/logs/phploc.csv" />
    <arg path="${basedir}/src" />
@@ -95,7 +96,7 @@
 
  <target name="pdepend"
          description="Calculate software metrics using PHP_Depend">
-  <exec executable="pdepend">
+  <exec executable="${phptools.exec.path}/pdepend.bat">
    <arg value="--jdepend-xml=${basedir}/build/logs/jdepend.xml" />
    <arg value="--jdepend-chart=${basedir}/build/pdepend/dependencies.svg" />
    <arg value="--overview-pyramid=${basedir}/build/pdepend/overview-pyramid.svg" />
@@ -105,7 +106,7 @@
 
  <target name="phpmd"
          description="Perform project mess detection using PHPMD">
-  <exec executable="phpmd">
+  <exec executable="${phptools.exec.path}/phpmd.bat">
    <arg path="${basedir}/src" />
    <arg value="text" />
    <arg value="${basedir}/build/phpmd.xml" />
@@ -114,7 +115,7 @@
 
  <target name="phpmd-ci"
          description="Perform project mess detection using PHPMD">
-  <exec executable="phpmd">
+  <exec executable="${phptools.exec.path}/phpmd.bat">
    <arg path="${basedir}/src" />
    <arg value="xml" />
    <arg value="${basedir}/build/phpmd.xml" />
@@ -134,7 +135,7 @@
 
  <target name="phpcs-ci"
          description="Find coding standard violations using PHP_CodeSniffer">
-  <exec executable="phpcs" output="/dev/null">
+  <exec executable="${phptools.exec.path}/phpcs.bat" output="${basedir}/build/logs/code_sniffer.log">
    <arg value="--report=checkstyle" />
    <arg value="--report-file=${basedir}/build/logs/checkstyle.xml" />
    <arg value="--standard=${basedir}/build/phpcs.xml" />
@@ -144,7 +145,7 @@
  </target>
 
  <target name="phpcpd" description="Find duplicate code using PHPCPD">
-  <exec executable="phpcpd">
+  <exec executable="${phptools.exec.path}/phpcpd.bat">
    <arg value="--log-pmd" />
    <arg value="${basedir}/build/logs/pmd-cpd.xml" />
    <arg path="${basedir}/src" />
@@ -153,16 +154,16 @@
 
  <target name="phpdox"
          description="Generate API documentation using phpDox">
-  <exec executable="phpdox"/>
+  <exec executable="${phptools.exec.path}/phpdox.bat"/>
  </target>
 
  <target name="phpunit" description="Run unit tests with PHPUnit">
-  <exec executable="phpunit" failonerror="true"/>
+  <exec executable="${phptools.exec.path}/phpunit.bat" failonerror="true"/>
  </target>
 
  <target name="phpcb"
          description="Aggregate tool output with PHP_CodeBrowser">
-  <exec executable="phpcb">
+  <exec executable="${phptools.exec.path}/phpcb.bat">
    <arg value="--log" />
    <arg path="${basedir}/build/logs" />
    <arg value="--source" />
